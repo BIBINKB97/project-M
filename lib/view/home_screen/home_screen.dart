@@ -31,7 +31,8 @@ class _HomeScreenState
   Widget build(
       BuildContext
           context) {
-    return Scaffold(
+    return 
+    Scaffold(
       appBar:
           AppBar(
         title: CustomText(
@@ -53,7 +54,7 @@ class _HomeScreenState
               fw: FontWeight.w500,
               color: kblack,
             ),
-            Container(
+            SizedBox(
               height: 200,
               width: double.infinity,
               child: GridView.builder(
