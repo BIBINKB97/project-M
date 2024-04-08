@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_m/view/home_screen/home_screen.dart';
-import 'package:project_m/view/login_screen/login_screen.dart';
-import 'package:project_m/view/login_screen/register_screen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -22,9 +21,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginScreen(),
-        '/home': (context) => HomeScreen(),
-        '/register': (context) => RegistrationScreen(),
+        '/': (context) => HomeScreen(),
+       
       },     );
   }
 }
