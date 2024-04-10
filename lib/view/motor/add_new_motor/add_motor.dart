@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:project_m/controller/motor_controller.dart';
-import 'package:project_m/model/motor_model.dart';
+import 'package:project_m/models/motor_model/motor_model.dart';
 import 'package:project_m/utils/utils.dart';
-import 'package:project_m/view/home_screen/home_screen.dart';
-import 'package:project_m/view/home_screen/widgets/textform_field.dart';
+import 'package:project_m/view/motor/motor_list_screen/motor_list.dart';
+import 'package:project_m/view/motor/motor_list_screen/widgets/textform_field.dart';
 import 'package:project_m/view/widgets/text_style.dart';
 
-class AddMotor extends StatefulWidget {
-  const AddMotor({super.key});
+class AddNewMotor extends StatefulWidget {
+  const AddNewMotor({super.key});
 
   @override
-  State<AddMotor> createState() => _AddMotorState();
+  State<AddNewMotor> createState() => _AddNewMotorState();
 }
 
-class _AddMotorState extends State<AddMotor> {
+class _AddNewMotorState extends State<AddNewMotor> {
    final TextEditingController _nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class _AddMotorState extends State<AddMotor> {
       backgroundColor: Colors.green,
     ));
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-      return  HomeScreen();
+      return  MotorListScreen();
     }));
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:project_m/model/motor_model.dart';
+import 'package:project_m/models/motor_model/motor_model.dart';
 
 ValueNotifier<List<MotorModel>> motorListNotifier = ValueNotifier([]);
 

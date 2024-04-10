@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:project_m/controller/motor_controller.dart';
-import 'package:project_m/model/motor_model.dart';
+import 'package:project_m/controller/valve_controller.dart';
+import 'package:project_m/models/motor_model/motor_model.dart';
 import 'package:project_m/utils/utils.dart';
-import 'package:project_m/view/add_new_motor/add_motor.dart';
-import 'package:project_m/view/add_new_motor/valves_list/valve_list.dart';
-import 'package:project_m/view/home_screen/widgets/dialogue.dart';
+import 'package:project_m/view/motor/add_new_motor/add_motor.dart';
+import 'package:project_m/view/valve/valves_list/valve_list.dart';
+import 'package:project_m/view/motor/motor_list_screen/widgets/dialogue.dart';
 import 'package:project_m/view/widgets/text_style.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}): super(key: key);
+class MotorListScreen extends StatefulWidget {
+  const MotorListScreen({Key? key}): super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MotorListScreen> createState() => _MotorListScreenState();
 }
-class _HomeScreenState extends State<HomeScreen> {
+class _MotorListScreenState extends State<MotorListScreen> {
   List<bool>  motorStates = List<bool>.generate(2,(index) => false);
   List<bool> valveStates = List<bool>.generate(50,(index) => false);
 
@@ -58,6 +58,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           return Row(
                             children: [
                               GestureDetector(
+                                onLongPress: () {
+                                  deleteData(index);
+                                  deleteValve(index);
+                                  print(index);
+                                },
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => ValveListScreen(),));
                                 },
@@ -117,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
             title: "Add New Motor",
             subTitle: "Do you want to add a new motor ?",
             onPressed: () {
-               Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddMotor(),));
+               Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddNewMotor(),));
             },
           ),
     );
