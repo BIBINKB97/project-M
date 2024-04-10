@@ -12,16 +12,18 @@ Future<void> addMotor(MotorModel value) async {
 }
 
 Future<void> getAllMotors() async {
-  final studendDb = await Hive.openBox<MotorModel>('MDB');
+  final motorDb = await Hive.openBox<MotorModel>('MDB');
   motorListNotifier.value.clear();
-  motorListNotifier.value.addAll(studendDb.values);
+  motorListNotifier.value.addAll(motorDb.values);
   motorListNotifier.notifyListeners();
+
 }
 
 Future<void> deleteData(int id) async {
   final motorDb = await Hive.openBox<MotorModel>('MDB');
   await motorDb.delete(id);
   getAllMotors();
+
 }
 
 Future<void> updateData(MotorModel model) async {

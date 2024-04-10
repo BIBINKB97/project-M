@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:project_m/model/motor_model.dart';
 import 'package:project_m/view/home_screen/home_screen.dart';
 
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  if(!Hive.isAdapterRegistered(MotorModelAdapter().typeId)){
+    Hive.registerAdapter(MotorModelAdapter());
+  }
   runApp(const MyApp());
 }
 
