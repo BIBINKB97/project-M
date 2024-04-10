@@ -21,7 +21,8 @@ Future<void> getAllMotors() async {
 
 Future<void> deleteData(int id) async {
   final motorDb = await Hive.openBox<MotorModel>('MDB');
-  await motorDb.delete(id);
+  await motorDb.deleteAt(id);
+    motorListNotifier.value.clear();
   getAllMotors();
 
 }

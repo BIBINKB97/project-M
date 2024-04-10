@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:project_m/controller/motor_controller.dart';
 import 'package:project_m/model/motor_model.dart';
 import 'package:project_m/utils/utils.dart';
-import 'package:project_m/view/add_new_motor/add_motor.dart';
-import 'package:project_m/view/add_new_motor/valves_list/valve_list.dart';
 import 'package:project_m/view/home_screen/widgets/dialogue.dart';
 import 'package:project_m/view/widgets/text_style.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}): super(key: key);
+class ValveListScreen extends StatefulWidget {
+  const ValveListScreen({Key? key}): super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ValveListScreen> createState() => _ValveListScreenState();
 }
-class _HomeScreenState extends State<HomeScreen> {
+class _ValveListScreenState extends State<ValveListScreen> {
   List<bool>  motorStates = List<bool>.generate(2,(index) => false);
   List<bool> valveStates = List<bool>.generate(50,(index) => false);
 
@@ -24,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: "Control Panel",
+          text: "motorname 's valves",
           fs: 25,
           fw: FontWeight.w700,
           color: kblack,
@@ -38,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
             children: [
               CustomText(
-                text: "Motor's",
+                text: "Valve's",
                 fs: 23,
                 fw: FontWeight.w500,
                 color: kblack,
@@ -57,25 +54,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           final data = motorList[index];
                           return Row(
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ValveListScreen(),));
-                                },
-                                child: Container(
-                                 height: 80,
-                                 width: 240,
-                                 decoration: BoxDecoration(
-                                  color: valveStates[index] ? Colors.green : Colors.red,
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(15),bottomLeft: Radius.circular(15)),
-                                 ),
-                                 child: Center(
-                                 child: CustomText(
-                                 text: " ${index+1}. ${data.motorName}",
-                                 fs: 15,
-                                 fw: FontWeight.w700,
-                                 color: kwhite,
-                                )),
-                                ),
+                              Container(
+                               height: 80,
+                               width: 240,
+                               decoration: BoxDecoration(
+                                color: valveStates[index] ? Colors.green : Colors.red,
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(15),bottomLeft: Radius.circular(15)),
+                               ),
+                               child: Center(
+                               child: CustomText(
+                               text: " ${index+1}. ${data.motorName}",
+                               fs: 15,
+                               fw: FontWeight.w700,
+                               color: kwhite,
+                              )),
                               ),
                               kWidth2,
                                GestureDetector(
@@ -114,10 +106,10 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton:
           FloatingButton(
-            title: "Add New Motor",
-            subTitle: "Do you want to add a new motor ?",
+            title: "Add New Valve",
+            subTitle: "Do you want to add a new Valve ?",
             onPressed: () {
-               Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddMotor(),));
+               Navigator.of(context).push(MaterialPageRoute(builder: (context) => ValveListScreen(),));
             },
           ),
     );
