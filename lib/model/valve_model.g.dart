@@ -1,35 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'motor_model.dart';
+part of 'valve_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MotorModelAdapter extends TypeAdapter<MotorModel> {
+class ValveModelAdapter extends TypeAdapter<ValveModel> {
   @override
   final int typeId = 1;
 
   @override
-  MotorModel read(BinaryReader reader) {
+  ValveModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return MotorModel(
+    return ValveModel(
       id: fields[0] as int?,
-      motorName: fields[1] as String,
+      valveName: fields[1] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, MotorModel obj) {
+  void write(BinaryWriter writer, ValveModel obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.motorName);
+      ..write(obj.valveName);
   }
 
   @override
@@ -38,7 +38,7 @@ class MotorModelAdapter extends TypeAdapter<MotorModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MotorModelAdapter &&
+      other is ValveModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

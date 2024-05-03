@@ -13,6 +13,8 @@ dependencies:
   hive_flutter: ^1.1.0
   get: ^4.6.6
   provider: ^6.1.2
+  telephony_sms: ^0.0.4
+  telephony: ^0.2.0
  
 
 dev_dependencies:

@@ -1,13 +1,14 @@
 import 'package:hive/hive.dart';
- part 'motor_model.g.dart';
+part 'valve_model.g.dart';
 @HiveType(typeId: 1)
-class MotorModel {
+class ValveModel {
   @HiveField(0)
   int? id;
   @HiveField(1)
-  final String motorName;
-  MotorModel({
+  final String valveName;
+ 
+  ValveModel({
     this.id,
-    required this.motorName,
+    required this.valveName,
   });
 }
