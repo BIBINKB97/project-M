@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:project_m/model/valve_model.dart';
+import 'package:project_m/providers/valve_provider.dart';
 import 'package:project_m/view/get_numbers.dart';
+import 'package:provider/provider.dart';
 
 
 void main() async {
@@ -18,9 +20,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-     debugShowCheckedModeBanner: false,
-     home: GetNumber(),
+    return MultiProvider(
+providers: [
+  ChangeNotifierProvider(create: (context) => ValveProviderClass(),)],
+      child: MaterialApp(
+       debugShowCheckedModeBanner: false,
+       home: GetNumber(),
+      ),
     );
   }
 }

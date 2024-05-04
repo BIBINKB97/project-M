@@ -15,10 +15,6 @@ class MotorListPage extends StatefulWidget {
 class _MotorListPageState extends State<MotorListPage> {
 List<bool> isMotorOnList = [false, false]; 
 final Telephony telephony = Telephony.instance;
-
-late final dynamic statusListener ;
-
- 
   
   @override
   Widget build(BuildContext context) {
@@ -67,11 +63,11 @@ late final dynamic statusListener ;
                    setState(() {
                     isMotorOnList[index] = !isMotorOnList[index];
                   });
-                  telephony.sendSms(
-                  to: "8589895760",
-                  message:"M${index + 1} ${isMotorOnList[index] ? 'ON' : 'OFF'}" ,
-                  statusListener:  statusListener
-                  );
+                  // telephony.sendSms(
+                  // to: "8589895760",
+                  // message:"M${index + 1} ${isMotorOnList[index] ? 'ON' : 'OFF'}" ,
+                  // statusListener:  statusListener
+                  // );
                   //  showDialog(context: context, builder: (context) {
                   //   return AlertDialog(
                   //     content: Container(
