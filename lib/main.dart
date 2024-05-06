@@ -22,7 +22,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
 providers: [
-  ChangeNotifierProvider(create: (context) => ValveProviderClass(),)],
+  ChangeNotifierProvider(create: (context) => ValveProviderClass(),),
+ 
+  ],
       child: MaterialApp(
        debugShowCheckedModeBanner: false,
        home: GetNumber(),

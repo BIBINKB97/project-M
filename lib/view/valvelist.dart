@@ -6,9 +6,14 @@ import 'package:project_m/utils/utils.dart';
 import 'package:project_m/view/edit_valve.dart';
 import 'package:project_m/view/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
+import 'package:telephony/telephony.dart';
 
 class ValveList extends StatefulWidget {
-   const ValveList({super.key,});
+  final TextEditingController numberController;
+  final int motorNo ;
+   const ValveList({super.key,
+    required this.numberController,
+    required this.motorNo,});
   @override
   _ValveListState createState() => _ValveListState();
 }
@@ -16,6 +21,8 @@ class ValveList extends StatefulWidget {
 class _ValveListState extends State<ValveList> {
    List<bool> newValveList = List.generate(1000, (index) => false); 
    TextEditingController nameController =TextEditingController();
+   final Telephony telephony = Telephony.instance;
+
 
     
   @override
@@ -25,14 +32,14 @@ class _ValveListState extends State<ValveList> {
     return Scaffold(
        appBar: AppBar(
         centerTitle: true,
-        title: CustomText(text: 'Valves of Motor'),
+        title: CustomText(text: 'Valves of Motor ${widget.motorNo}'),
       ),
       body: Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
+               Center(
                 child: Container(
                            margin: EdgeInsets.symmetric(
                             vertical: 10),
@@ -59,7 +66,7 @@ class _ValveListState extends State<ValveList> {
                                    final list = valveProviderClass.valveList[index];
                                    return
                                  Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                  padding: EdgeInsets.symmetric(horizontal: 15,),
                                    child: Row( 
                                     children: [
                                     GestureDetector(
@@ -116,6 +123,10 @@ class _ValveListState extends State<ValveList> {
                            onTap: () async {
                                setState(() {
                                  newValveList[index] = !newValveList[index];
+                                  telephony.sendSms(
+                                  to: widget.numberController.text,
+                                  message:"V${index + 1} ${newValveList[index] ? 'ON' : 'OFF'}" ,
+                                  );
                                });
                              },
                              child: Container(
@@ -127,7 +138,7 @@ class _ValveListState extends State<ValveList> {
                              ),
                              child: Center(
                              child: CustomText(
-                             text:newValveList[index]? "ON" : "OFF",
+                             text:newValveList[index]? "OPEN" : "CLOSE",
                              fs: 15,
                              fw: FontWeight.w700,
                              color: kwhite,
@@ -144,7 +155,10 @@ class _ValveListState extends State<ValveList> {
                                      itemCount: valveProviderClass.valveList.length,
                                    ) 
                                : Center(
-                               child: Text("Add new valve by clicking the plus button"),
+                               child: CustomText(
+                                text: "Add new valve by clicking the plus button",
+                                fs: 20,
+                                fw: FontWeight.w500,),
                                )
                                );
                               }
@@ -152,46 +166,46 @@ class _ValveListState extends State<ValveList> {
                                ],
                              ),
                              Positioned(
-                              bottom: 50.0,
-                              right: 30.0,
-                              child: FloatingActionButton(
-                             onPressed: () {
-                             showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                              title: Text('Add New Valve'),
-                              content: TextFormField(
-                              controller: nameController,
-                              onChanged: (valveName) {
-                             
-                             },
-                             decoration: InputDecoration(hintText: 'Enter Valve Name'),
-                           ),
-                            actions: [
-                             TextButton(
-                               onPressed: () => Navigator.pop(context),
-                               child: Text('Cancel'),
-                             ),
-                             TextButton(
-                              onPressed: () {
-                             final newValveName =nameController.text; 
-                             if (newValveName.isNotEmpty) {
-                             onAddButton();
-                             nameController.clear();
-                             Navigator.pop(context);
-                              }
-                              },
-                             child: Text('Add'),
-                              ),
-                             ],
-                           ),
-                         );
-                       },
-                       tooltip: 'Add Valve',
-                       child: Icon(Icons.add),
-                       ),
-                     ),
-                   ],
+                                  bottom: 50.0,
+                                  right: 30.0,
+                                  child: FloatingActionButton(
+                                 onPressed: () {
+                                 showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                  title: Text('Add New Valve'),
+                                  content: TextFormField(
+                                  controller: nameController,
+                                  
+                                 decoration: InputDecoration(
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                                  hintText: 'Enter Valve Name'),
+                                    ),
+                                  actions: [
+                                 TextButton(
+                                   onPressed: () => Navigator.pop(context),
+                                   child: Text('Cancel'),
+                                 ),
+                                 TextButton(
+                                  onPressed: () {
+                                 var newValveName =nameController.text; 
+                                 if (newValveName.isNotEmpty) {
+                                 onAddButton();
+                                 nameController.clear();
+                                 Navigator.pop(context);
+                                  } 
+                                  },
+                                 child: Text('Add'),
+                                  ),
+                                 ],
+                                   ),
+                                 );
+                               },
+                               tooltip: 'Add Valve',
+                               child: Icon(Icons.add),
+                               ),
+                             )
+                            ]
                  ),
                );
              }

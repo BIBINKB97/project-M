@@ -17,7 +17,7 @@ class GetNumber extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
-                controller: motorController,
+                controller:  motorController,
                 keyboardType: TextInputType.number,
                 maxLength: 10,
                 decoration: InputDecoration(
@@ -27,8 +27,14 @@ class GetNumber extends StatelessWidget {
               kHeight10,
               GestureDetector(
                 onTap: () {
-                  
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MotorListPage(),));
+                   String number = motorController.text.trim();
+                    if(number.isEmpty){
+                      return;
+                    }
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => MotorListPage(
+                       numberController: TextEditingController(text: number) ),));
                 },
                 child: Container(
                   height: 60,

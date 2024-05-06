@@ -6,8 +6,8 @@ import 'package:telephony/telephony.dart';
 
 
 class MotorListPage extends StatefulWidget {
-
-  const MotorListPage({super.key});
+  final TextEditingController numberController ;
+  const MotorListPage({super.key, required this.numberController});
   @override
   State<MotorListPage> createState() => _MotorListPageState();
 }
@@ -15,6 +15,7 @@ class MotorListPage extends StatefulWidget {
 class _MotorListPageState extends State<MotorListPage> {
 List<bool> isMotorOnList = [false, false]; 
 final Telephony telephony = Telephony.instance;
+
   
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,14 @@ final Telephony telephony = Telephony.instance;
             children: [
               GestureDetector(
                 onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ValveList(),));
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ValveList(
+                    motorNo: index+1,
+                  numberController: TextEditingController(
+                  text: widget.numberController.text),
+                  ),
+                  )
+                  );
                 },
                 child: Container(
                   height: 80,
@@ -63,40 +71,36 @@ final Telephony telephony = Telephony.instance;
                    setState(() {
                     isMotorOnList[index] = !isMotorOnList[index];
                   });
-                  // telephony.sendSms(
-                  // to: "8589895760",
+                  //  telephony.sendSms(
+                  // to: widget.numberController.text,
                   // message:"M${index + 1} ${isMotorOnList[index] ? 'ON' : 'OFF'}" ,
-                  // statusListener:  statusListener
                   // );
-                  //  showDialog(context: context, builder: (context) {
-                  //   return AlertDialog(
-                  //     content: Container(
-                  //       height: 100,
-                  //       width: double.infinity,
-                  //       child: Column(children: [         
-                  //       ],),
-                  //     ),
-                  //     actions: [
-                  //       TextButton(onPressed: () {
-                  //       Navigator.pop(context);
-                  //       }, child: Text("close")),
-                  //     ],
-                  //   );
-                  // },);
-                  // await _telephonySMS.requestPermission();
-                  // await _telephonySMS.sendSMS(
-                  //   phone: "8589895760",
-                  //   message: "M${index + 1} ${isMotorOnList[index] ? 'ON' : 'OFF'}",
-                  // );
+                   showDialog(context: context, builder: (context) {
+                    return AlertDialog(
+                      content: SizedBox(
+                        height: 100,
+                        width: double.infinity,
+                        child: Column(children: [
+                               
+                        ],),
+                      ),
+                      actions: [
+                        TextButton(onPressed: () {
+                        Navigator.pop(context);
+                        }, child: Text("close")),
+                      ],
+                    );
+                  },);
+              
                 },
                 child: Container(
                   height: 80,
                   width: 100,
                   decoration: BoxDecoration(
-                    color: isMotorOnList[index] ? Colors.green : kred,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
+                  color: isMotorOnList[index] ? Colors.green : kred,
+                  borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
                     ),
                   ),
                   child: Center(
