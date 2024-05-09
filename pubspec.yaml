@@ -15,6 +15,7 @@ dependencies:
   provider: ^6.1.2
   telephony_sms: ^0.0.4
   telephony: ^0.2.0
+  shared_preferences: ^2.2.3
  
 
 dev_dependencies:

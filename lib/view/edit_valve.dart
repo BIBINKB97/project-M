@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_m/model/valve_model.dart';
+import 'package:project_m/model/valve_model/valve_model.dart';
 import 'package:project_m/providers/valve_provider.dart';
 import 'package:provider/provider.dart';
 

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:project_m/model/number_model/number_model.dart';
+import 'package:project_m/providers/receiver_provider.dart';
 import 'package:project_m/utils/utils.dart';
 import 'package:project_m/view/motorlist.dart';
+import 'package:provider/provider.dart';
 
 
 class GetNumber extends StatelessWidget {
@@ -18,7 +21,7 @@ class GetNumber extends StatelessWidget {
             children: [
               TextFormField(
                 controller:  motorController,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.phone,
                 maxLength: 10,
                 decoration: InputDecoration(
                 hintText: 'Enter motor number',
@@ -27,14 +30,17 @@ class GetNumber extends StatelessWidget {
               kHeight10,
               GestureDetector(
                 onTap: () {
-                   String number = motorController.text.trim();
-                    if(number.isEmpty){
-                      return;
+                   dynamic number = motorController.text.trim();
+                   if (number.isNotEmpty) {
+                   final motorNumber = int.parse(number);
+                   final numberModel = NumberModel(number: motorNumber);
+                   Provider.of<ReceiverProviderClass>(context, listen: false).addNumber(numberModel);
                     }
+
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => MotorListPage(
-                       numberController: TextEditingController(text: number) ),));
+                       ),));
                 },
                 child: Container(
                   height: 60,

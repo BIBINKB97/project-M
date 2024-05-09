@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:project_m/model/valve_model.dart';
+import 'package:project_m/model/valve_model/valve_model.dart';
 
 class ValveProviderClass with ChangeNotifier {
 

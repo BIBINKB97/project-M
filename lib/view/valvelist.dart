@@ -1,20 +1,24 @@
 // ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:project_m/model/valve_model.dart';
+import 'package:project_m/model/valve_model/valve_model.dart';
+import 'package:project_m/providers/receiver_provider.dart';
 import 'package:project_m/providers/valve_provider.dart';
 import 'package:project_m/utils/utils.dart';
 import 'package:project_m/view/edit_valve.dart';
 import 'package:project_m/view/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:telephony/telephony.dart';
 
 class ValveList extends StatefulWidget {
-  final TextEditingController numberController;
+  
   final int motorNo ;
    const ValveList({super.key,
-    required this.numberController,
+   
     required this.motorNo,});
   @override
+
   _ValveListState createState() => _ValveListState();
 }
 
@@ -23,7 +27,26 @@ class _ValveListState extends State<ValveList> {
    TextEditingController nameController =TextEditingController();
    final Telephony telephony = Telephony.instance;
 
+      @override
+  void initState() {
+    super.initState();
+    _loadValveStatus();
+  }
 
+  void _loadValveStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    for (int i = 0; i < newValveList.length; i++) {
+      bool isOpen = prefs.getBool('valve_$i') ?? false;
+      setState(() {
+        newValveList[i] = isOpen;
+      });
+    }
+  }
+
+  void saveValveStatus(int index, bool isOpen) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('valve_$index', isOpen);
+  }
     
   @override
   Widget build(BuildContext context) {  
@@ -119,32 +142,38 @@ class _ValveListState extends State<ValveList> {
                             ),
                           ),
                           kWidth2,
-                           GestureDetector(
-                           onTap: () async {
-                               setState(() {
-                                 newValveList[index] = !newValveList[index];
-                                  telephony.sendSms(
-                                  to: widget.numberController.text,
-                                  message:"V${index + 1} ${newValveList[index] ? 'ON' : 'OFF'}" ,
-                                  );
-                               });
-                             },
-                             child: Container(
-                             height: 80,
-                             width: 100,
-                             decoration: BoxDecoration(
-                             color:newValveList[index]? kgreen : kred,
-                             borderRadius: BorderRadius.only(topRight: Radius.circular(15),bottomRight: Radius.circular(15)),
-                             ),
-                             child: Center(
-                             child: CustomText(
-                             text:newValveList[index]? "OPEN" : "CLOSE",
-                             fs: 15,
-                             fw: FontWeight.w700,
-                             color: kwhite,
-                             )),
-                             ),
-                                        ),
+                           Consumer<ReceiverProviderClass>(
+                             builder: (context,numberProvider,_) {
+                               return GestureDetector(
+                               onTap: () async {
+                                     setState(() {
+                                      newValveList[index] = !newValveList[index];
+                                     saveValveStatus(
+                                      index, newValveList[index]);
+                                     telephony.sendSms(
+                                      to: numberProvider.motorNO!.number.toString(),
+                                      message:"V${index + 1} ${newValveList[index] ? 'ON' : 'OFF'}" ,
+                                      );
+                                   });
+                                 },
+                                 child: Container(
+                                 height: 80,
+                                 width: 100,
+                                 decoration: BoxDecoration(
+                                 color:newValveList[index]? kgreen : kred,
+                                 borderRadius: BorderRadius.only(topRight: Radius.circular(15),bottomRight: Radius.circular(15)),
+                                 ),
+                                 child: Center(
+                                 child: CustomText(
+                                 text:newValveList[index]? "OPEN" : "CLOSE",
+                                 fs: 15,
+                                 fw: FontWeight.w700,
+                                 color: kwhite,
+                                 )),
+                                 ),
+                                            );
+                             }
+                           ),
                                         ],
                                       ),
                                      );
@@ -156,9 +185,9 @@ class _ValveListState extends State<ValveList> {
                                    ) 
                                : Center(
                                child: CustomText(
-                                text: "Add new valve by clicking the plus button",
-                                fs: 20,
-                                fw: FontWeight.w500,),
+                                text: "Click the plus to add new valve",
+                                fs: 18,
+                                fw: FontWeight.w400,),
                                )
                                );
                               }
@@ -176,9 +205,7 @@ class _ValveListState extends State<ValveList> {
                                   title: Text('Add New Valve'),
                                   content: TextFormField(
                                   controller: nameController,
-                                  
                                  decoration: InputDecoration(
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
                                   hintText: 'Enter Valve Name'),
                                     ),
                                   actions: [
