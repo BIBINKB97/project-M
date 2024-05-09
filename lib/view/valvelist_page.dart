@@ -151,7 +151,7 @@ class _ValveListState extends State<ValveList> {
                                      saveValveStatus(
                                       index, newValveList[index]);
                                      telephony.sendSms(
-                                      to: numberProvider.motorNO!.number.toString(),
+                                      to: numberProvider.motorNumber!.number.toString(),
                                       message:"V${index + 1} ${newValveList[index] ? 'ON' : 'OFF'}" ,
                                       );
                                    });

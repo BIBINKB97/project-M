@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_m/providers/receiver_provider.dart';
 import 'package:project_m/utils/utils.dart';
-import 'package:project_m/view/valvelist.dart';
+import 'package:project_m/view/valvelist_page.dart';
 import 'package:project_m/view/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -96,7 +96,7 @@ final Telephony telephony = Telephony.instance;
                         });
                          saveMotorStatus(index, isMotorOnList[index]);
                          telephony.sendSms(
-                        to: numberProvider.motorNO!.number.toString(),
+                        to: numberProvider.motorNumber!.number.toString(),
                         message:"M${index + 1} ${isMotorOnList[index] ? 'ON' : 'OFF'}" ,
                         );
                          showDialog(context: context, builder: (context) {
@@ -148,5 +148,3 @@ final Telephony telephony = Telephony.instance;
     );
        }
   }
-
-

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_m/model/number_model/number_model.dart';
 import 'package:project_m/providers/receiver_provider.dart';
 import 'package:project_m/utils/utils.dart';
-import 'package:project_m/view/motorlist.dart';
+import 'package:project_m/view/motorlist_page.dart';
 import 'package:provider/provider.dart';
 
 

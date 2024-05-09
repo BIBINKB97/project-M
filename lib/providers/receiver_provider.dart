@@ -3,20 +3,19 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:project_m/model/number_model/number_model.dart';
 class ReceiverProviderClass with ChangeNotifier {
 
-  NumberModel? motorNO;
+  NumberModel? motorNumber ;
 
   Future<void> addNumber(NumberModel number) async {
     final numberDB = await Hive.openBox<NumberModel>('numberDB');
     final id = await numberDB.add(number);
     number.id = id;
-    motorNO = number; 
+    motorNumber  = number; 
     notifyListeners();
   }
  
-Future<void> getNumber() async {
+Future <void> getNumber( ) async {
   final numberDB = await Hive.openBox<NumberModel>('numberDB');
-  motorNO = numberDB.values.firstOrNull; 
+  motorNumber  = numberDB.values.firstOrNull; 
   notifyListeners();
 }
-
 }
